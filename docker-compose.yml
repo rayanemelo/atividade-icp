@@ -1,0 +1,45 @@
+services:
+  pki:
+    build:
+      context: .
+      dockerfile: ./pki-server/Dockerfile
+    container_name: pki.local
+    hostname: pki.local
+    ports:
+      - "8080:80"
+    networks:
+      icp-net:
+        aliases:
+          - pki.local
+  
+  web:
+    build:
+      context: .
+      dockerfile: ./web-server/Dockerfile
+    container_name: web.local
+    hostname: web.local
+    ports:
+      - "443:443" 
+    depends_on:
+      - pki
+    networks:
+      icp-net:
+        aliases:
+          - web.local
+
+
+  client:
+    build: 
+      context: .
+      dockerfile: ./client/Dockerfile
+    container_name: client
+    hostname: client
+    depends_on:
+      - web
+      - pki
+    networks:
+      - icp-net
+
+networks:
+  icp-net:
+    driver: bridge

@@ -1,0 +1,47 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir               = .
+database          = $dir/index.txt
+new_certs_dir     = $dir/newcerts
+certificate       = $dir/certs/raiz.crt.pem
+serial            = $dir/serial
+crlnumber         = $dir/crlnumber
+crl_dir           = $dir/crl
+private_key       = $dir/private/raiz.key.pem
+RANDFILE          = $dir/private/.rand
+
+default_days      = 730
+default_crl_days  = 180
+default_md        = sha256
+preserve          = no
+policy            = policy_strict
+
+[ policy_strict ]
+countryName             = match
+stateOrProvinceName     = supplied
+organizationName        = supplied
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+default_bits        = 4096
+default_md          = sha256
+prompt              = no
+distinguished_name  = dn
+
+[ dn ]
+C                   = BR
+ST                  = Rio Grande do Sul
+L                   = Taquara
+O                   = PKI Local Root
+CN                  = PKI Root CA
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer
+basicConstraints = critical, CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+authorityInfoAccess = CA Issuers;URI:http://pki.local/raiz.crt
+crlDistributionPoints = URI:http://pki.local/crl/raiz.crl

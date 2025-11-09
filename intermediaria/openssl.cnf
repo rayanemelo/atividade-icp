@@ -1,0 +1,50 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir               = .
+database          = $dir/index.txt
+new_certs_dir     = $dir/newcerts
+certificate       = $dir/certs/intermediaria.crt.pem
+serial            = $dir/serial
+crlnumber         = $dir/crlnumber
+crl_dir           = $dir/crl
+private_key       = $dir/private/intermediaria.key.pem
+RANDFILE          = $dir/private/.rand
+
+default_days      = 365
+default_crl_days  = 180
+default_md        = sha256
+preserve          = no
+policy            = policy_loose
+
+[ policy_loose ]
+countryName             = optional
+stateOrProvinceName     = optional
+organizationName        = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+default_bits        = 4096
+default_md          = sha256
+prompt              = no
+distinguished_name  = dn
+
+[ dn ]
+C                   = BR
+ST                  = Rio Grande do Sul
+L                   = Taquara
+O                   = PKI Local Intermediate
+CN                  = PKI Intermediate CA
+
+[ v3_server ]
+basicConstraints = critical, CA:false
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+authorityInfoAccess = CA Issuers;URI:http://pki.local/intermediaria.crt
+crlDistributionPoints = URI:http://pki.local/crl/intermediaria.crl
+
+[ alt_names ]
+DNS.1 = web.local

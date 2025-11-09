@@ -46,7 +46,7 @@ mkdir -p certs crl newcerts private csr
 openssl genrsa -aes256 -out private/intermediaria.key.pem 4096
 chmod 400 private/intermediaria.key.pem
 
-# Criar o Certificate Signing Request (CSR)
+# Criar assinatura de certificado (CSR)
 openssl req -config openssl.cnf -new -sha256 -key private/intermediaria.key.pem -out csr/intermediaria.csr.pem
 
 # Assinar o CSR usando a CA Raiz

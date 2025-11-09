@@ -1,0 +1,1 @@
+V	261109182848Z		1000	unknown	/C=BR/ST=Rio Grande do Sul/O=PKI Local Intermediate/CN=PKI Intermediate CA
